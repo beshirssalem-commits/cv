@@ -526,17 +526,53 @@ h1, h2, h3, h4 { font-family: var(--f-display); margin: 0; letter-spacing: -0.01
 
   .hero { padding-top: 80px; }
   .hero-name { font-size: clamp(2.2rem, 10vw, 3rem); }
-  .hero-stats { gap: 24px; }
+  .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; }
+  .stat-num { font-size: 1.5rem; }
+  .stat-suffix { font-size: 1.1rem; }
+  .stat-label { font-size: 0.66rem; max-width: 100%; }
   .tag-chip { display: none; }
 
   .expertise-grid { grid-template-columns: 1fr 1fr; }
   .analyzer-grid { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
-  .section { padding: 70px 0; }
+  .section { padding: 56px 0; }
+
+  /* ---- About: tighter lede, calmer fact cards ---- */
+  .about-copy .lede { font-size: 1.05rem; line-height: 1.55; }
+  .about-facts { gap: 12px; }
+  .fact-card { padding: 16px 18px; }
+  .fact-card-wide .fact-pills { gap: 7px; }
+  .fact-pills span { font-size: 0.68rem; padding: 5px 10px; }
+
+  /* ---- Timeline: marker no longer overlaps the rail, smaller heading ---- */
+  .timeline { padding-left: 44px; margin-top: 36px; }
+  .timeline-rail { left: 14px; }
+  .timeline-marker {
+    left: -44px; width: 30px; height: 30px; font-size: 0.58rem;
+  }
+  .timeline-card { padding: 20px 18px; }
+  .timeline-card h3 { font-size: 1.05rem; line-height: 1.3; }
+  .timeline-card:hover { transform: none; }
+
+  /* ---- Training & Certifications: smaller heading, no orphaned wrap ---- */
+  .section-title { font-size: 1.65rem; line-height: 1.2; }
+  .training-layout { gap: 30px; }
+  .training-heading { margin-top: 28px; }
+  .training-col + .training-heading { margin-top: 28px; }
+
+  /* ---- Course grid: compact chips instead of tall uniform blocks ---- */
+  .course-grid { gap: 8px; }
+  .course-chip {
+    padding: 10px 14px; font-size: 0.82rem; line-height: 1.4;
+    border-radius: 6px;
+  }
 }
 
 @media (max-width: 480px) {
   .expertise-grid { grid-template-columns: 1fr; }
   .hero-actions { flex-direction: column; align-items: flex-start; }
   .hero-social { margin-left: 0; margin-top: 4px; }
+  .hero-stats { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .stat-num { font-size: 1.3rem; }
+  .stat-label { font-size: 0.62rem; }
 }
