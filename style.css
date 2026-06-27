@@ -367,9 +367,19 @@ h1, h2, h3, h4 { font-family: var(--f-display); margin: 0; letter-spacing: -0.01
 }
 .timeline-card:hover { border-color: var(--accent-dim); transform: translateX(4px); }
 .timeline-card h3 { font-size: 1.25rem; margin-bottom: 6px; }
-.timeline-meta { display: block; font-family: var(--f-mono); font-size: 0.74rem; color: var(--accent); margin-bottom: 14px; }
-.timeline-card p { color: var(--text-dim); margin-bottom: 14px; }
-.timeline-points { display: flex; flex-direction: column; gap: 8px; }
+.timeline-meta { display: block; font-family: var(--f-mono); font-size: 0.74rem; color: var(--accent); margin-bottom: 16px; }
+
+.timeline-sub {
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px;
+  padding: 14px 16px; margin-bottom: 12px;
+}
+.timeline-sub:last-child { margin-bottom: 0; }
+.timeline-sub-label {
+  display: block; font-family: var(--f-mono); font-size: 0.66rem; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;
+}
+.timeline-sub p { color: var(--text-dim); margin: 0; font-size: 0.92rem; }
+.timeline-points { display: flex; flex-direction: column; gap: 8px; margin: 0; }
 .timeline-points li { position: relative; padding-left: 18px; color: var(--text-dim); font-size: 0.92rem; }
 .timeline-points li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); }
 
@@ -573,6 +583,8 @@ h1, h2, h3, h4 { font-family: var(--f-display); margin: 0; letter-spacing: -0.01
   .timeline-card { padding: 20px 18px; }
   .timeline-card h3 { font-size: 1.05rem; line-height: 1.3; }
   .timeline-card:hover { transform: none; }
+  .timeline-sub { padding: 12px 14px; }
+  .timeline-sub p, .timeline-points li { font-size: 0.88rem; }
 
   /* ---- Training & Certifications: smaller heading, no orphaned wrap ---- */
   .section-title { font-size: 1.65rem; line-height: 1.2; }
