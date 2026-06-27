@@ -1,585 +1,598 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Beshir Saad Salem — Instrumentation &amp; Control Specialist</title>
-  <meta name="description" content="Beshir Saad Salem — Instrumentation & Control Specialist, Process Analytical Instruments Supervisor, Acting Head of Instrumentation Division at RASCO. Nearly 19 years in Oil & Gas engineering.">
-  <meta name="keywords" content="Instrumentation Engineer, Process Analyzer, Gas Chromatograph, RASCO, Oil and Gas, Control Systems, Calibration, Beshir Saad Salem">
-  <meta name="author" content="Beshir Saad Salem">
+/* ===================================================================
+   BESHIR SAAD SALEM — INSTRUMENTATION ENGINEER PORTFOLIO
+   Design language: industrial HMI / P&ID panel. Dark navy + steel +
+   cyan signal accent + amber status accent. Mono type for tags/data.
+   =================================================================== */
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Beshir Saad Salem — Instrumentation & Control Specialist">
-  <meta property="og:description" content="Acting Head of Instrumentation Division, RASCO. Nearly 19 years of Oil & Gas instrumentation and process-analyzer engineering.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://github.com/beshirssalem-commits/cv/blob/main/ChatGPT%20Image%20Jun%2027,%202026,%2001_55_50%20AM.png?raw=true">
+:root {
+  /* ---- Color tokens (dark theme, default) ---- */
+  --bg:        #0a0f14;
+  --bg-alt:    #0d1820;
+  --surface:   #121e27;
+  --surface-2: #182733;
+  --line:      #24343f;
+  --text:      #e8edf0;
+  --text-dim:  #9fb1bc;
+  --text-mute: #5a7282;
+  --accent:    #3ad6ee;
+  --accent-dim: #1f7d8c;
+  --warn:      #ffb020;
+  --ok:        #5ee6a0;
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='%230a0f14' stroke='%233ad6ee' stroke-width='5'/><line x1='50' y1='6' x2='50' y2='20' stroke='%233ad6ee' stroke-width='5'/></svg>">
+  --accent-rgb: 58, 214, 238;
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  /* ---- Type ---- */
+  --f-display: 'Space Grotesk', 'Inter', sans-serif;
+  --f-body: 'Inter', sans-serif;
+  --f-mono: 'JetBrains Mono', monospace;
 
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  /* ---- Layout ---- */
+  --maxw: 1180px;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --transition: 0.35s cubic-bezier(.22,.61,.36,1);
+}
 
-  <!-- ============ LOADER ============ -->
-  <div id="loader" class="loader" aria-hidden="true">
-    <div class="loader-tag">
-      <svg viewBox="0 0 60 60" width="48" height="48">
-        <circle cx="30" cy="30" r="26" fill="none" stroke="currentColor" stroke-width="2"/>
-        <text x="30" y="35" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="currentColor">PT</text>
-      </svg>
-      <div class="loader-bar"><span></span></div>
-    </div>
-  </div>
+[data-theme="light"] {
+  --bg:        #f4f7f8;
+  --bg-alt:    #eaf0f2;
+  --surface:   #ffffff;
+  --surface-2: #f0f4f5;
+  --line:      #d8e1e4;
+  --text:      #0e1a21;
+  --text-dim:  #44575f;
+  --text-mute: #7c8d94;
+  --accent:    #0090a8;
+  --accent-dim: #00b8d4;
+  --warn:      #b5790a;
+  --ok:        #1a9e64;
+}
 
-  <!-- ============ NOISE / GRID BACKDROP (fixed, behind everything) ============ -->
-  <div class="grid-backdrop" aria-hidden="true"></div>
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
-  <!-- ============ NAV ============ -->
-  <nav class="nav" id="nav">
-    <a href="#hero" class="nav-logo">
-      <span class="tag-bubble">BSS</span>
-      <span class="nav-logo-text">Beshir&nbsp;Saad&nbsp;Salem</span>
-    </a>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#about" data-tag="01">About</a></li>
-      <li><a href="#experience" data-tag="02">Experience</a></li>
-      <li><a href="#expertise" data-tag="03">Expertise</a></li>
-      <li><a href="#analyzers" data-tag="04">Analyzers</a></li>
-      <li><a href="#projects" data-tag="05">Projects</a></li>
-      <li><a href="#training" data-tag="06">Training</a></li>
-      <li><a href="#contact" data-tag="07">Contact</a></li>
-    </ul>
-    <div class="nav-actions">
-      <button id="themeToggle" class="icon-btn" aria-label="Toggle light and dark mode" title="Toggle theme">
-        <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
-      </button>
-      <a href="assets/Beshir_Saad_Salem_CV.pdf" class="btn btn-ghost btn-small" download>Download CV</a>
-    </div>
-  </nav>
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
 
-  <!-- ============ HERO ============ -->
-  <header class="hero" id="hero">
-    <canvas id="signalCanvas" class="signal-canvas" aria-hidden="true"></canvas>
+p, .timeline-points li, .fact-pills span, .course-chip {
+  text-wrap: pretty;
+}
 
-    <div class="hero-inner">
-      <div class="hero-text">
-        <p class="eyebrow" data-reveal>
-          <span class="status-dot" aria-hidden="true"></span>
-          Ras Lanuf Oil &amp; Gas Processing Company — RASCO
-        </p>
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition: background var(--transition), color var(--transition);
+}
 
-        <h1 class="hero-name" data-reveal>
-          BESHIR SAAD <span class="accent">SALEM</span>
-        </h1>
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+ul { padding: 0; margin: 0; list-style: none; }
+button { font-family: inherit; cursor: pointer; }
 
-        <div class="hero-role" data-reveal>
-          <span class="typed" id="typedRole"></span><span class="cursor">|</span>
-        </div>
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
 
-        <p class="hero-sub" data-reveal>
-          Instrumentation &amp; Control Specialist · Process Analytical Instruments Supervisor · Acting Head of Instrumentation Division — nearly 19 years commissioning, calibrating, and modernizing critical measurement systems across oil &amp; gas processing.
-        </p>
+.container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 28px;
+}
 
-        <div class="hero-actions" data-reveal>
-          <a href="assets/Beshir_Saad_Salem_CV.pdf" class="btn btn-primary" download>
-            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
-            Download CV
-          </a>
-          <a href="#contact" class="btn btn-outline">Contact Me</a>
-          <div class="hero-social">
-            <a href="#" class="social-btn" id="linkedinLink" aria-label="LinkedIn" title="LinkedIn">
-              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm6.5 0H13v1.7h.06c.55-1.04 1.9-2.13 3.9-2.13 4.17 0 4.94 2.74 4.94 6.3V21h-4v-5.6c0-1.34-.02-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.96V21h-4V9z" fill="currentColor" stroke="none"/></svg>
-            </a>
-            <a href="#" class="social-btn" id="githubLink" aria-label="GitHub" title="GitHub">
-              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.34 1.12 2.91.86.09-.66.34-1.12.62-1.38-2.22-.26-4.56-1.13-4.56-5.02 0-1.11.39-2.02 1.03-2.73-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.04a9.3 9.3 0 0 1 5 0c1.91-1.31 2.75-1.04 2.75-1.04.55 1.42.2 2.47.1 2.73.64.71 1.03 1.62 1.03 2.73 0 3.9-2.35 4.76-4.58 5.01.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2z" fill="currentColor" stroke="none"/></svg>
-            </a>
-            <a href="mailto:beshir8147@raslanuf.ly" class="social-btn" aria-label="Email">
-              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M3 5h18v14H3V5zm0 0l9 8 9-8"/></svg>
-            </a>
-          </div>
-        </div>
+h1, h2, h3, h4 { font-family: var(--f-display); margin: 0; letter-spacing: -0.01em; }
 
-        <div class="hero-stats" data-reveal>
-          <div class="stat">
-            <span class="stat-num" data-count="19">0</span><span class="stat-suffix">+</span>
-            <span class="stat-label">Years in Oil &amp; Gas</span>
-          </div>
-          <div class="stat">
-            <span class="stat-num" data-count="8">0</span>
-            <span class="stat-label">Major Modernization Projects</span>
-          </div>
-          <div class="stat">
-            <span class="stat-num" data-count="17">0</span>
-            <span class="stat-label">Professional Courses</span>
-          </div>
-        </div>
-      </div>
+/* ===== Grid backdrop ===== */
+.grid-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(var(--accent-rgb), 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--accent-rgb), 0.05) 1px, transparent 1px);
+  background-size: 42px 42px;
+  pointer-events: none;
+  opacity: 0.5;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 75%);
+}
 
-      <div class="hero-photo-wrap" data-reveal>
-        <div class="photo-frame">
-          <img src="assets/images/profile.png" alt="Portrait of Beshir Saad Salem" class="hero-photo" loading="eager">
-          <svg class="photo-ring" viewBox="0 0 220 220" aria-hidden="true">
-            <circle cx="110" cy="110" r="106" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 6"/>
-          </svg>
-          <div class="tag-chip tag-chip-1">PAI-101<span>ANALYZER</span></div>
-          <div class="tag-chip tag-chip-2">IC-2007<span>ACTIVE</span></div>
-        </div>
-      </div>
-    </div>
+/* ===== Loader ===== */
+.loader {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+  color: var(--accent);
+}
+.loader.hide { opacity: 0; visibility: hidden; }
+.loader-tag { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.loader-bar { width: 140px; height: 2px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.loader-bar span { display: block; height: 100%; width: 0%; background: var(--accent); animation: loaderFill 1s ease forwards; }
+@keyframes loaderFill { to { width: 100%; } }
 
-    <a href="#about" class="scroll-cue" aria-label="Scroll to content">
-      <span>SCROLL</span>
-      <svg viewBox="0 0 24 24" width="14" height="14"><path d="M12 4v16m0 0l-6-6m6 6l6-6"/></svg>
-    </a>
-  </header>
+/* ===================== NAV ===================== */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 28px;
+  background: rgba(10,15,20,0.55);
+  backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid transparent;
+  transition: background var(--transition), border-color var(--transition), padding var(--transition);
+}
+[data-theme="light"] .nav { background: rgba(244,247,248,0.7); }
+.nav.scrolled { border-bottom-color: var(--line); padding: 10px 28px; background: rgba(10,15,20,0.92); }
+[data-theme="light"] .nav.scrolled { background: rgba(244,247,248,0.95); }
 
-  <main>
-    <!-- ============ ABOUT ============ -->
-    <section class="section" id="about">
-      <div class="container">
-        <p class="section-tag" data-reveal><span class="tag-bubble small">01</span>About</p>
-        <h2 class="section-title" data-reveal>Executive Profile</h2>
+.nav-logo { display: flex; align-items: center; gap: 10px; font-family: var(--f-mono); font-size: 0.85rem; }
+.nav-logo-text { color: var(--text); font-weight: 500; }
 
-        <div class="about-grid">
-          <div class="about-copy" data-reveal>
-            <p class="lede">
-              For nearly nineteen years, Beshir Saad Salem has been the steady hand behind the instrumentation that keeps Ras Lanuf's process units measuring, signaling, and running true.
-            </p>
+.tag-bubble {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 1px solid var(--accent); color: var(--accent);
+  font-family: var(--f-mono); font-size: 0.65rem; font-weight: 600;
+  flex-shrink: 0;
+}
+.tag-bubble.small { width: 26px; height: 26px; font-size: 0.6rem; }
 
-            <div class="profile-blocks">
-              <div class="profile-block">
-                <span class="profile-block-label">2007 — Foundations</span>
-                <p>Began as an Instrumentation &amp; Control Technician, building a career on the discipline production depends on: instruments calibrated correctly, analyzers reading clean, shutdowns completed on schedule.</p>
-              </div>
-              <div class="profile-block">
-                <span class="profile-block-label">2020 — Specialization</span>
-                <p>Became Process Analytical Instruments Specialist and Supervisor — trusted with the plant's most sensitive measurement loops, from Siemens MAXUM gas chromatographs to Yokogawa pH and conductivity analyzers.</p>
-              </div>
-              <div class="profile-block">
-                <span class="profile-block-label">2025 — Leadership</span>
-                <p>Now Acting Head of the Instrumentation Division: leading technical evaluations, planning modernization projects, negotiating with vendors, and mentoring the next generation of technicians.</p>
-              </div>
-              <div class="profile-block">
-                <span class="profile-block-label">Philosophy</span>
-                <p>Treats reliability as a craft and learning as a habit — closing the loop between engineering studies, field execution, and the next problem worth solving, now with an eye on AI and digital tools.</p>
-              </div>
-            </div>
-          </div>
+.nav-links { display: flex; gap: 26px; }
+.nav-links a {
+  font-family: var(--f-mono); font-size: 0.78rem; color: var(--text-dim);
+  position: relative; padding: 4px 0; transition: color 0.25s;
+  display: flex; align-items: center; gap: 6px;
+}
+.nav-links a[data-tag]::before { content: attr(data-tag); color: var(--accent-dim); font-size: 0.7rem; }
+.nav-links a:hover, .nav-links a:focus-visible { color: var(--accent); }
+.nav-links a::after {
+  content: ''; position: absolute; left: 0; bottom: -2px; width: 0; height: 1px;
+  background: var(--accent); transition: width 0.3s;
+}
+.nav-links a:hover::after { width: 100%; }
 
-          <div class="about-facts" data-reveal>
-            <div class="fact-card">
-              <span class="fact-label">Employer</span>
-              <span class="fact-value">Ras Lanuf Oil &amp; Gas Processing Co. (RASCO)</span>
-            </div>
-            <div class="fact-card">
-              <span class="fact-label">Current Role</span>
-              <span class="fact-value">Acting Head of Instrumentation Division</span>
-            </div>
-            <div class="fact-card">
-              <span class="fact-label">Nationality</span>
-              <span class="fact-value">Libyan</span>
-            </div>
-            <div class="fact-card">
-              <span class="fact-label">Base of Operations</span>
-              <span class="fact-value">Ras Lanuf City, Libya</span>
-            </div>
-            <div class="fact-card fact-card-wide">
-              <span class="fact-label">Core Disciplines</span>
-              <div class="fact-pills">
-                <span>Instrumentation</span><span>Process Analyzers</span><span>Engineering Studies</span>
-                <span>Vendor Communication</span><span>Reliability</span><span>Digital Transformation</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+.nav-actions { display: flex; align-items: center; gap: 12px; }
 
-    <!-- ============ EXPERIENCE TIMELINE ============ -->
-    <section class="section section-dark" id="experience">
-      <div class="container">
-        <p class="section-tag" data-reveal><span class="tag-bubble small">02</span>Career Signal Trace</p>
-        <h2 class="section-title" data-reveal>Experience</h2>
-        <p class="section-intro" data-reveal>Three plateaus, one continuous signal — nearly two decades of rising responsibility inside RASCO's Instrumentation Division.</p>
+.icon-btn {
+  background: transparent; border: 1px solid var(--line); color: var(--text-dim);
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.25s, color 0.25s;
+}
+.icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+.icon-btn svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; }
+.icon-moon { display: none; }
+[data-theme="light"] .icon-sun { display: none; }
+[data-theme="light"] .icon-moon { display: block; }
 
-        <div class="timeline" id="timeline">
-          <div class="timeline-rail" aria-hidden="true"><div class="timeline-rail-fill" id="railFill"></div></div>
+.nav-toggle {
+  display: none; flex-direction: column; justify-content: center; gap: 5px;
+  background: none; border: none; width: 32px; height: 32px;
+}
+.nav-toggle span { width: 100%; height: 2px; background: var(--text); transition: 0.3s; }
 
-          <article class="timeline-item" data-reveal>
-            <div class="timeline-marker"><span>2007</span></div>
-            <div class="timeline-card">
-              <h3>Instrumentation &amp; Control Technician</h3>
-              <span class="timeline-meta">2007 — 2020 · RASCO, Ras Lanuf</span>
-              <p>Began a career in field instrumentation: installing, calibrating, and maintaining transmitters, control valves, switches, and pneumatic systems across process units. Built deep hands-on fluency in HART communication, signal converters, and the first generation of analyzer sample-conditioning systems that would define his later specialty.</p>
-              <ul class="timeline-points">
-                <li>Preventive &amp; corrective maintenance on field instrumentation</li>
-                <li>Calibration and commissioning support across shutdowns</li>
-                <li>Early exposure to process analyzers and sample systems</li>
-              </ul>
-            </div>
-          </article>
+/* ===================== BUTTONS ===================== */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 24px; border-radius: var(--radius-sm);
+  font-family: var(--f-mono); font-size: 0.82rem; font-weight: 500;
+  border: 1px solid transparent; transition: transform 0.25s, box-shadow 0.25s, background 0.25s, color 0.25s, border-color .25s;
+  white-space: nowrap;
+}
+.btn svg { stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+.btn-primary { background: var(--accent); color: #04181d; }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.35); }
+.btn-outline { border-color: var(--line); color: var(--text); }
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+.btn-ghost { border-color: var(--line); color: var(--text-dim); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+.btn-small { padding: 8px 16px; font-size: 0.75rem; }
+.btn-large { padding: 16px 34px; font-size: 0.9rem; }
 
-          <article class="timeline-item" data-reveal>
-            <div class="timeline-marker"><span>2020</span></div>
-            <div class="timeline-card">
-              <h3>Process Analytical Instruments Specialist / Supervisor</h3>
-              <span class="timeline-meta">2020 — 2025 · RASCO, Ras Lanuf</span>
-              <p>Took ownership of the plant's analytical instrumentation: gas chromatographs, pH and conductivity analyzers, and the shelters and conditioning systems that keep them accurate. Supervised technicians, wrote technical reports, and became the primary technical contact for analyzer vendors and modernization proposals.</p>
-              <ul class="timeline-points">
-                <li>Supervised process analyzer maintenance &amp; reliability</li>
-                <li>Led vendor evaluation for analyzer upgrades</li>
-                <li>Authored technical reports &amp; engineering studies</li>
-              </ul>
-            </div>
-          </article>
+/* ===================== HERO ===================== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  padding-top: 90px;
+  overflow: hidden;
+}
+.signal-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.55; }
 
-          <article class="timeline-item" data-reveal>
-            <div class="timeline-marker"><span>2025</span></div>
-            <div class="timeline-card">
-              <h3>Acting Head of Instrumentation Division</h3>
-              <span class="timeline-meta">2025 — Present · RASCO, Ras Lanuf</span>
-              <p>Leads the Instrumentation Division's technical direction: project planning, procurement support, vendor negotiation, and team leadership across instrumentation and process analytics. Drives modernization initiatives spanning control valves, radar tank gauging, vibration monitoring, and legacy pneumatic system replacement.</p>
-              <ul class="timeline-points">
-                <li>Division-level technical leadership &amp; project planning</li>
-                <li>Sponsor of major modernization &amp; upgrade projects</li>
-                <li>Mentoring technicians; driving digital transformation initiatives</li>
-              </ul>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
+.hero-inner {
+  flex: 1;
+  max-width: var(--maxw); margin: 0 auto; width: 100%;
+  padding: 40px 28px;
+  display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 40px;
+  align-items: center;
+  position: relative; z-index: 2;
+}
 
-    <!-- ============ TECHNICAL EXPERTISE ============ -->
-    <section class="section" id="expertise">
-      <div class="container">
-        <p class="section-tag" data-reveal><span class="tag-bubble small">03</span>Capability</p>
-        <h2 class="section-title" data-reveal>Technical Expertise</h2>
-        <p class="section-intro" data-reveal>The full loop — from field device to engineering decision.</p>
+.eyebrow {
+  font-family: var(--f-mono); font-size: 0.78rem; color: var(--text-dim);
+  display: flex; align-items: center; gap: 10px;
+  margin: 0 0 22px;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 0 rgba(94,230,160,0.6); animation: pulseDot 2s infinite; }
+@keyframes pulseDot { 0% { box-shadow: 0 0 0 0 rgba(94,230,160,0.5); } 70% { box-shadow: 0 0 0 8px rgba(94,230,160,0); } 100% { box-shadow: 0 0 0 0 rgba(94,230,160,0); } }
 
-        <div class="expertise-grid" id="expertiseGrid">
-          <!-- Cards injected/enhanced by JS but present in HTML for no-JS fallback & SEO -->
-          <div class="expertise-card" data-reveal>
-            <div class="expertise-icon">⌁</div>
-            <h3>Instrumentation &amp; Control</h3>
-            <p>Transmitters, control valves, switches, HART devices &amp; pneumatic systems.</p>
-          </div>
-          <div class="expertise-card" data-reveal>
-            <div class="expertise-icon">⏚</div>
-            <h3>Control Systems</h3>
-            <p>DCS operation &amp; maintenance, signal converters, loop diagnostics.</p>
-          </div>
-          <div class="expertise-card" data-reveal>
-            <div class="expertise-icon">⌬</div>
-            <h3>Process Analyzers</h3>
-            <p>Gas chromatographs, pH/conductivity analyzers, sample conditioning.</p>
-          </div>
-          <div class="expertise-card" data-reveal>
-            <div class="expertise-icon">⏣</div>
-            <h3>Gas Chromatographs</h3>
-            <p>Operation, calibration &amp; modernization of GC analytical trains.</p>
-          </div>
-          <div class="expertise-card" data-reveal>
-            <div class="expertise-icon">⏼</div>
-            <h3>Shutdown Maintenance</h3>
-            <p>Planning &amp; execution of instrumentation scopes during turnarounds.</p>
-          </div>
-          <div class="expertise-card" data-reveal>
-            <div class="expertise-icon">⏦</div>
-            <h3>Preventive Maintenance</h3>
-            <p>Reliability-driven maintenance programs across instrument fleets.</p>
-          </div>
-          <div class="expertise-card" data-reveal>
-            <div class="expertise-icon">◎</div>
-            <h3>Calibration</h3>
-            <p>Precision calibration of transmitters, analyzers &amp; field devices.</p>
-          </div>
-          <div class="expertise-card" data-reveal>
-            <div class="expertise-icon">▣</div>
-            <h3>Commissioning</h3>
-            <p>Start-up &amp; loop checks for new and upgraded instrumentation.</p>
-          </div>
-          <div class="expertise-card" data-reveal>
-            <div class="expertise-icon">⏛</div>
-            <h3>Control Valves</h3>
-            <p>Sizing review, maintenance &amp; troubleshooting of control valves.</p>
-          </div>
-          <div class="expertise-card" data-reveal>
-            <div class="expertise-icon">⏠</div>
-            <h3>Transmitters &amp; Switches</h3>
-            <p>Pressure, level, flow &amp; temperature transmitters and switches.</p>
-          </div>
-          <div class="expertise-card" data-reveal>
-            <div class="expertise-icon">⌇</div>
-            <h3>HART &amp; Signal Converters</h3>
-            <p>HART communication, signal conditioning &amp; conversion systems.</p>
-          </div>
-          <div class="expertise-card" data-reveal>
-            <div class="expertise-icon">⏢</div>
-            <h3>Pneumatic Systems</h3>
-            <p>Legacy pneumatic transmitter &amp; converter maintenance and migration.</p>
-          </div>
-          <div class="expertise-card" data-reveal>
-            <div class="expertise-icon">⎙</div>
-            <h3>Technical Reports</h3>
-            <p>Engineering studies, evaluation reports &amp; documentation.</p>
-          </div>
-          <div class="expertise-card" data-reveal>
-            <div class="expertise-icon">⇄</div>
-            <h3>Vendor Evaluation</h3>
-            <p>Technical evaluation, vendor communication &amp; procurement support.</p>
-          </div>
-          <div class="expertise-card" data-reveal>
-            <div class="expertise-icon">▤</div>
-            <h3>Project Planning</h3>
-            <p>Scoping &amp; planning for modernization &amp; capital projects.</p>
-          </div>
-          <div class="expertise-card" data-reveal>
-            <div class="expertise-icon">⟡</div>
-            <h3>Reliability &amp; Leadership</h3>
-            <p>Reliability improvement programs &amp; technical team leadership.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+.hero-name {
+  font-size: clamp(2.6rem, 6.5vw, 4.6rem);
+  line-height: 1.05; font-weight: 700;
+  margin: 0 0 18px;
+  white-space: nowrap;
+}
+.hero-name .accent { color: var(--accent); }
 
-    <!-- ============ ANALYTICAL INSTRUMENTS ============ -->
-    <section class="section section-dark" id="analyzers">
-      <div class="container">
-        <p class="section-tag" data-reveal><span class="tag-bubble small">04</span>Hardware</p>
-        <h2 class="section-title" data-reveal>Analytical Instruments</h2>
-        <p class="section-intro" data-reveal>The fleet of analyzers, conditioning systems &amp; shelters under direct technical responsibility.</p>
+.hero-role {
+  font-family: var(--f-mono); font-size: clamp(1rem, 2vw, 1.3rem);
+  color: var(--text-dim); margin-bottom: 22px; min-height: 1.6em;
+}
+.cursor { color: var(--accent); animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
 
-        <div class="analyzer-grid" id="analyzerGrid">
-          <div class="analyzer-card" data-reveal data-tag="GC-8801">
-            <h3>Siemens MAXUM Edition II</h3>
-            <span class="analyzer-type">Process Gas Chromatograph</span>
-          </div>
-          <div class="analyzer-card" data-reveal data-tag="GC-8000">
-            <h3>Yokogawa GC8000</h3>
-            <span class="analyzer-type">Process Gas Chromatograph</span>
-          </div>
-          <div class="analyzer-card" data-reveal data-tag="AE-2202">
-            <h3>Yokogawa pH Analyzer</h3>
-            <span class="analyzer-type">Liquid Analyzer</span>
-          </div>
-          <div class="analyzer-card" data-reveal data-tag="AE-2203">
-            <h3>Yokogawa Conductivity</h3>
-            <span class="analyzer-type">Liquid Analyzer</span>
-          </div>
-          <div class="analyzer-card" data-reveal data-tag="O2-4401">
-            <h3>Ametek WDG-IV</h3>
-            <span class="analyzer-type">Oxygen / Combustion Analyzer</span>
-          </div>
-          <div class="analyzer-card" data-reveal data-tag="H2S-3301">
-            <h3>Teledyne 3020PB</h3>
-            <span class="analyzer-type">H₂S / Sulfur Analyzer</span>
-          </div>
-          <div class="analyzer-card" data-reveal data-tag="SCS-101">
-            <h3>Sample Conditioning Systems</h3>
-            <span class="analyzer-type">Sample Handling</span>
-          </div>
-          <div class="analyzer-card" data-reveal data-tag="SHL-01">
-            <h3>Analyzer Shelters</h3>
-            <span class="analyzer-type">Environmental Housing</span>
-          </div>
-          <div class="analyzer-card" data-reveal data-tag="CAL-GAS">
-            <h3>Calibration Gas Systems</h3>
-            <span class="analyzer-type">Calibration Infrastructure</span>
-          </div>
-        </div>
-      </div>
-    </section>
+.hero-sub {
+  max-width: 560px; color: var(--text-dim); font-size: 1.02rem;
+  margin: 0 0 32px;
+}
 
-    <!-- ============ MAJOR PROJECTS ============ -->
-    <section class="section" id="projects">
-      <div class="container">
-        <p class="section-tag" data-reveal><span class="tag-bubble small">05</span>Track Record</p>
-        <h2 class="section-title" data-reveal>Major Engineering Projects</h2>
-        <p class="section-intro" data-reveal>Selected modernization &amp; upgrade initiatives. Open any project for the full scope.</p>
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-bottom: 44px; }
+.hero-social { display: flex; gap: 10px; margin-left: 4px; }
+.social-btn {
+  width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: center; color: var(--text-dim);
+  transition: border-color 0.25s, color 0.25s, transform 0.25s;
+}
+.social-btn svg { stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; }
+.social-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
 
-        <div class="project-grid" id="projectGrid"><!-- injected by JS --></div>
-      </div>
-    </section>
+.hero-stats { display: flex; gap: 38px; flex-wrap: wrap; }
+.stat { font-family: var(--f-mono); }
+.stat-num { font-size: 2rem; font-weight: 700; color: var(--accent); }
+.stat-suffix { font-size: 1.3rem; color: var(--accent); font-weight: 700; }
+.stat-label { display: block; font-size: 0.75rem; color: var(--text-mute); margin-top: 4px; max-width: 130px; }
 
-    <!-- Project Modal -->
-    <div class="modal-backdrop" id="modalBackdrop">
-      <div class="modal" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
-        <div id="modalContent"></div>
-      </div>
-    </div>
+.hero-photo-wrap { display: flex; justify-content: center; }
+.photo-frame { position: relative; width: min(320px, 80vw); }
+.hero-photo {
+  width: 100%; aspect-ratio: 1/1; object-fit: cover;
+  border-radius: 50%; border: 1px solid var(--line);
+  filter: grayscale(15%) contrast(1.05);
+  background: var(--surface);
+}
+.photo-ring { position: absolute; inset: -14px; color: var(--accent); animation: spin 40s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-    <!-- ============ TRAINING & CERTIFICATIONS ============ -->
-    <section class="section section-dark" id="training">
-      <div class="container">
-        <p class="section-tag" data-reveal><span class="tag-bubble small">06</span>Foundation</p>
-        <h2 class="section-title" data-reveal>Training &amp; Certifications</h2>
+.tag-chip {
+  position: absolute; font-family: var(--f-mono); font-size: 0.68rem;
+  background: var(--surface); border: 1px solid var(--accent-dim);
+  color: var(--accent); padding: 6px 10px; border-radius: 6px;
+  display: flex; flex-direction: column; gap: 2px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  animation: floatChip 5s ease-in-out infinite;
+}
+.tag-chip span { color: var(--text-mute); font-size: 0.6rem; }
+.tag-chip-1 { top: 8%; left: -14%; animation-delay: 0s; }
+.tag-chip-2 { bottom: 10%; right: -12%; animation-delay: 1.4s; }
+@keyframes floatChip { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
-        <div class="training-layout">
-          <div class="training-col" data-reveal>
-            <h3 class="training-heading">Education</h3>
-            <div class="edu-card">
-              <span class="edu-year">2006</span>
-              <h4>Diploma — Instrumentation &amp; Control</h4>
-              <p>Petroleum Training &amp; Qualifying Institute (PTQI), Tripoli</p>
-            </div>
+.scroll-cue {
+  position: relative; z-index: 2; align-self: center; margin-bottom: 26px;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  font-family: var(--f-mono); font-size: 0.68rem; color: var(--text-mute);
+  letter-spacing: 0.1em;
+  animation: bobCue 2.4s ease-in-out infinite;
+}
+.scroll-cue svg { stroke: currentColor; fill: none; stroke-width: 1.6; }
+@keyframes bobCue { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
 
-            <h3 class="training-heading">English Proficiency</h3>
-            <div class="cert-row">
-              <span class="cert-pill">PET</span>
-              <span class="cert-pill">FCE</span>
-              <span class="cert-pill">IELTS</span>
-            </div>
-          </div>
+/* ===================== SECTIONS (generic) ===================== */
+.section { padding: 110px 0; position: relative; }
+.section-dark { background: var(--bg-alt); }
 
-          <div class="training-col training-col-wide" data-reveal>
-            <h3 class="training-heading">Professional Courses</h3>
-            <div class="course-grid" id="courseGrid"><!-- injected by JS --></div>
-          </div>
-        </div>
-      </div>
-    </section>
+.section-tag {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--f-mono); font-size: 0.78rem; color: var(--text-dim);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  margin: 0 0 16px;
+}
+.section-title { font-size: clamp(1.9rem, 4vw, 2.7rem); margin-bottom: 16px; }
+.section-title-sm { font-size: 1.5rem; margin-bottom: 22px; }
+.section-intro { color: var(--text-dim); max-width: 620px; margin: 0 0 50px; font-size: 1.02rem; }
 
-    <!-- ============ LANGUAGE & DIGITAL SKILLS ============ -->
-    <section class="section" id="skills">
-      <div class="container">
-        <div class="skills-grid">
-          <div class="skills-col" data-reveal>
-            <p class="section-tag"><span class="tag-bubble small">L</span>Language Skills</p>
-            <h2 class="section-title-sm">Language</h2>
+/* scroll reveal */
+[data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+[data-reveal].in-view { opacity: 1; transform: translateY(0); }
 
-            <div class="lang-block">
-              <div class="lang-row">
-                <span class="lang-name">Arabic</span><span class="lang-level">Native</span>
-              </div>
-              <div class="meter"><div class="meter-fill" data-pct="100"></div></div>
-            </div>
+/* ===================== ABOUT ===================== */
+.about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px; align-items: start; }
+.about-copy .lede { font-size: 1.18rem; color: var(--text); font-weight: 500; margin-bottom: 26px; }
 
-            <div class="lang-block">
-              <div class="lang-row"><span class="lang-name">English — Writing</span><span class="lang-level">Excellent</span></div>
-              <div class="meter"><div class="meter-fill" data-pct="92"></div></div>
-            </div>
-            <div class="lang-block">
-              <div class="lang-row"><span class="lang-name">English — Reading</span><span class="lang-level">Excellent</span></div>
-              <div class="meter"><div class="meter-fill" data-pct="92"></div></div>
-            </div>
-            <div class="lang-block">
-              <div class="lang-row"><span class="lang-name">English — Listening</span><span class="lang-level">Very Good</span></div>
-              <div class="meter"><div class="meter-fill" data-pct="80"></div></div>
-            </div>
-            <div class="lang-block">
-              <div class="lang-row"><span class="lang-name">English — Speaking</span><span class="lang-level">Very Good</span></div>
-              <div class="meter"><div class="meter-fill" data-pct="80"></div></div>
-            </div>
-          </div>
+.profile-blocks { display: flex; flex-direction: column; gap: 12px; }
+.profile-block {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 18px 20px; border-left: 2px solid var(--accent-dim);
+  transition: border-color 0.25s;
+}
+.profile-block:hover { border-left-color: var(--accent); }
+.profile-block-label {
+  display: block; font-family: var(--f-mono); font-size: 0.7rem; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;
+}
+.profile-block p { color: var(--text-dim); margin: 0; font-size: 0.96rem; }
 
-          <div class="skills-col" data-reveal>
-            <p class="section-tag"><span class="tag-bubble small">D</span>Digital Skills</p>
-            <h2 class="section-title-sm">Digital</h2>
+.about-facts { display: flex; flex-direction: column; gap: 14px; }
+.fact-card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 18px 20px; display: flex; flex-direction: column; gap: 6px;
+  transition: border-color 0.25s;
+}
+.fact-card:hover { border-color: var(--accent-dim); }
+.fact-label { font-family: var(--f-mono); font-size: 0.68rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; }
+.fact-value { font-size: 0.98rem; color: var(--text); }
+.fact-card-wide .fact-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.fact-pills span {
+  font-family: var(--f-mono); font-size: 0.7rem; color: var(--text-dim);
+  border: 1px solid var(--line); border-radius: 20px; padding: 5px 11px;
+}
 
-            <div class="lang-block">
-              <div class="lang-row"><span class="lang-name">Microsoft Office</span></div>
-              <div class="meter"><div class="meter-fill" data-pct="90"></div></div>
-            </div>
-            <div class="lang-block">
-              <div class="lang-row"><span class="lang-name">Microsoft Outlook</span></div>
-              <div class="meter"><div class="meter-fill" data-pct="88"></div></div>
-            </div>
-            <div class="lang-block">
-              <div class="lang-row"><span class="lang-name">Technical Documentation</span></div>
-              <div class="meter"><div class="meter-fill" data-pct="95"></div></div>
-            </div>
-            <div class="lang-block">
-              <div class="lang-row"><span class="lang-name">Engineering Reports</span></div>
-              <div class="meter"><div class="meter-fill" data-pct="93"></div></div>
-            </div>
-            <div class="lang-block">
-              <div class="lang-row"><span class="lang-name">Website Development / CMS</span></div>
-              <div class="meter"><div class="meter-fill" data-pct="65"></div></div>
-            </div>
-            <div class="lang-block">
-              <div class="lang-row"><span class="lang-name">Graphic Design</span></div>
-              <div class="meter"><div class="meter-fill" data-pct="60"></div></div>
-            </div>
-            <div class="lang-block">
-              <div class="lang-row"><span class="lang-name">Artificial Intelligence Tools</span></div>
-              <div class="meter"><div class="meter-fill" data-pct="70"></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+/* ===================== TIMELINE ===================== */
+.timeline { position: relative; margin-top: 50px; padding-left: 60px; }
+.timeline-rail { position: absolute; left: 19px; top: 6px; bottom: 6px; width: 2px; background: var(--line); }
+.timeline-rail-fill { position: absolute; top: 0; left: 0; width: 100%; height: 0%; background: var(--accent); transition: height 0.3s linear; }
 
-    <!-- ============ CONTACT ============ -->
-    <section class="section section-dark" id="contact">
-      <div class="container">
-        <p class="section-tag" data-reveal><span class="tag-bubble small">07</span>Get in Touch</p>
-        <h2 class="section-title" data-reveal>Contact</h2>
-        <p class="section-intro" data-reveal>Available for full-time, contract &amp; short-term instrumentation engineering assignments — onshore or offshore.</p>
+.timeline-item { position: relative; margin-bottom: 56px; }
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-marker {
+  position: absolute; left: -60px; top: 0; width: 40px; height: 40px;
+  border-radius: 50%; background: var(--bg-alt); border: 2px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--f-mono); font-size: 0.65rem; color: var(--text-mute);
+  transition: border-color 0.4s, color 0.4s;
+}
+.timeline-item.active .timeline-marker { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 0 4px rgba(var(--accent-rgb),0.12); }
 
-        <div class="contact-grid">
-          <a href="tel:+218914860116" class="contact-card" data-reveal>
-            <div class="contact-icon">
-              <svg viewBox="0 0 24 24" width="22" height="22"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            </div>
-            <span class="contact-label">Mobile</span>
-            <span class="contact-value">+218 91 4860116</span>
-            <button class="copy-btn" data-copy="+218914860116" type="button">Copy</button>
-          </a>
+.timeline-card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 26px 28px; transition: border-color 0.3s, transform 0.3s;
+}
+.timeline-card:hover { border-color: var(--accent-dim); transform: translateX(4px); }
+.timeline-card h3 { font-size: 1.25rem; margin-bottom: 6px; }
+.timeline-meta { display: block; font-family: var(--f-mono); font-size: 0.74rem; color: var(--accent); margin-bottom: 14px; }
+.timeline-card p { color: var(--text-dim); margin-bottom: 14px; }
+.timeline-points { display: flex; flex-direction: column; gap: 8px; }
+.timeline-points li { position: relative; padding-left: 18px; color: var(--text-dim); font-size: 0.92rem; }
+.timeline-points li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); }
 
-          <a href="mailto:beshir8147@raslanuf.ly" class="contact-card" data-reveal>
-            <div class="contact-icon">
-              <svg viewBox="0 0 24 24" width="22" height="22"><path d="M3 5h18v14H3V5zm0 0l9 8 9-8"/></svg>
-            </div>
-            <span class="contact-label">Email</span>
-            <span class="contact-value">beshir8147@raslanuf.ly</span>
-            <button class="copy-btn" data-copy="beshir8147@raslanuf.ly" type="button">Copy</button>
-          </a>
+/* ===================== EXPERTISE GRID ===================== */
+.expertise-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.expertise-card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 22px 20px; transition: transform 0.3s, border-color 0.3s, background 0.3s;
+}
+.expertise-card:hover { transform: translateY(-5px); border-color: var(--accent); background: var(--surface-2); }
+.expertise-icon { font-size: 1.6rem; color: var(--accent); margin-bottom: 10px; font-family: var(--f-mono); }
+.expertise-card h3 { font-size: 1rem; margin-bottom: 6px; }
+.expertise-card p { font-size: 0.85rem; color: var(--text-mute); margin: 0; }
 
-          <div class="contact-card" data-reveal>
-            <div class="contact-icon">
-              <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 21s7-7.58 7-12.5A7 7 0 0 0 5 8.5C5 13.42 12 21 12 21z"/><circle cx="12" cy="8.5" r="2.4"/></svg>
-            </div>
-            <span class="contact-label">Residence</span>
-            <span class="contact-value">Soug Al-Sabt, Libya</span>
-          </div>
+/* ===================== ANALYZER GRID ===================== */
+.analyzer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.analyzer-card {
+  position: relative; background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 24px 22px 22px; overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.analyzer-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+.analyzer-card::before {
+  content: attr(data-tag); position: absolute; top: 14px; right: 16px;
+  font-family: var(--f-mono); font-size: 0.66rem; color: var(--accent-dim);
+  border: 1px solid var(--line); border-radius: 12px; padding: 3px 9px;
+}
+.analyzer-card h3 { font-size: 1.05rem; margin: 18px 0 6px; max-width: 80%; }
+.analyzer-type { font-family: var(--f-mono); font-size: 0.74rem; color: var(--text-mute); }
 
-          <div class="contact-card" data-reveal>
-            <div class="contact-icon">
-              <svg viewBox="0 0 24 24" width="22" height="22"><rect x="3" y="7" width="18" height="13" rx="1"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-            </div>
-            <span class="contact-label">Current Work</span>
-            <span class="contact-value">Ras Lanuf City, Libya</span>
-          </div>
-        </div>
+/* ===================== PROJECTS ===================== */
+.project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.project-card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 28px; cursor: pointer; transition: border-color 0.3s, transform 0.3s;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+.project-card .proj-tag { font-family: var(--f-mono); font-size: 0.7rem; color: var(--accent); }
+.project-card h3 { font-size: 1.18rem; }
+.project-card p { color: var(--text-dim); font-size: 0.92rem; margin: 0; }
+.project-card .proj-open { font-family: var(--f-mono); font-size: 0.76rem; color: var(--text-mute); margin-top: 6px; display: flex; align-items: center; gap: 6px; }
+.project-card:hover .proj-open { color: var(--accent); }
 
-        <div class="contact-cta" data-reveal>
-          <a href="mailto:beshir8147@raslanuf.ly" class="btn btn-primary btn-large">Email Me Directly</a>
-        </div>
-      </div>
-    </section>
-  </main>
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(4,8,11,0.7); backdrop-filter: blur(4px);
+  z-index: 1000; display: flex; align-items: center; justify-content: center;
+  padding: 24px; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+}
+.modal-backdrop.open { opacity: 1; visibility: visible; }
+.modal {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+  max-width: 640px; width: 100%; max-height: 85vh; overflow-y: auto;
+  padding: 36px; position: relative;
+  transform: translateY(20px) scale(0.98); transition: transform 0.35s;
+}
+.modal-backdrop.open .modal { transform: translateY(0) scale(1); }
+.modal-close {
+  position: absolute; top: 18px; right: 18px; background: none; border: 1px solid var(--line);
+  color: var(--text-dim); width: 34px; height: 34px; border-radius: 50%; font-size: 1.2rem; line-height: 1;
+}
+.modal-close:hover { color: var(--accent); border-color: var(--accent); }
+.modal h2 { font-size: 1.5rem; margin-bottom: 6px; padding-right: 30px; }
+.modal .proj-tag { font-family: var(--f-mono); font-size: 0.74rem; color: var(--accent); display:block; margin-bottom: 20px; }
+.modal-block { margin-bottom: 18px; }
+.modal-block h4 { font-family: var(--f-mono); font-size: 0.74rem; color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+.modal-block p, .modal-block li { color: var(--text-dim); font-size: 0.94rem; }
+.modal-block ul { display: flex; flex-direction: column; gap: 6px; }
+.modal-block li { position: relative; padding-left: 16px; }
+.modal-block li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); }
+.modal-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.modal-tags span { font-family: var(--f-mono); font-size: 0.7rem; border: 1px solid var(--line); border-radius: 16px; padding: 4px 10px; color: var(--text-dim); }
 
-  <footer class="footer">
-    <div class="container footer-inner">
-      <span>© <span id="year"></span> Beshir Saad Salem. Built &amp; maintained as a living engineering record.</span>
-      <span class="footer-tag">SIGNAL: NOMINAL</span>
-    </div>
-  </footer>
+/* ===================== TRAINING ===================== */
+.training-layout { display: grid; grid-template-columns: 0.85fr 1.6fr; gap: 50px; }
+.training-heading { font-size: 1.05rem; color: var(--accent); margin: 0 0 16px; font-family: var(--f-mono); text-transform: uppercase; letter-spacing: 0.04em; }
+.training-col + .training-heading { margin-top: 36px; }
+.edu-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; margin-bottom: 30px; }
+.edu-year { font-family: var(--f-mono); color: var(--accent); font-size: 0.85rem; }
+.edu-card h4 { font-size: 1.05rem; margin: 8px 0 6px; }
+.edu-card p { color: var(--text-dim); margin: 0; font-size: 0.9rem; }
+.cert-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.cert-pill {
+  font-family: var(--f-mono); font-size: 0.78rem; border: 1px solid var(--accent-dim); color: var(--accent);
+  border-radius: 8px; padding: 8px 16px;
+}
+.course-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.course-chip {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+  padding: 13px 16px; font-size: 0.86rem; color: var(--text-dim);
+  display: flex; align-items: flex-start; gap: 10px; transition: border-color 0.25s, color 0.25s;
+}
+.course-chip::before { content: '✓'; color: var(--ok); font-family: var(--f-mono); flex-shrink: 0; }
+.course-chip:hover { border-color: var(--accent-dim); color: var(--text); }
 
-  <button id="backToTop" class="back-to-top" aria-label="Back to top">
-    <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 19V5m0 0l-6 6m6-6l6 6"/></svg>
-  </button>
+/* ===================== LANGUAGE/DIGITAL SKILLS ===================== */
+.skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+.lang-block { margin-bottom: 18px; }
+.lang-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.92rem; }
+.lang-name { color: var(--text); }
+.lang-level { color: var(--text-mute); font-family: var(--f-mono); font-size: 0.78rem; }
+.meter { height: 6px; border-radius: 4px; background: var(--surface-2); overflow: hidden; border: 1px solid var(--line); }
+.meter-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-dim), var(--accent)); border-radius: 4px; transition: width 1.4s cubic-bezier(.22,.61,.36,1); }
 
-  <script src="script.js"></script>
-</body>
-</html>
+/* ===================== CONTACT ===================== */
+.contact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 50px; }
+.contact-card {
+  position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 26px 22px; display: flex; flex-direction: column; gap: 8px;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.contact-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+.contact-icon { color: var(--accent); margin-bottom: 6px; }
+.contact-icon svg { stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; }
+.contact-label { font-family: var(--f-mono); font-size: 0.68rem; color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.05em; }
+.contact-value { font-size: 0.98rem; word-break: break-word; }
+.copy-btn {
+  align-self: flex-start; margin-top: 8px; background: none; border: 1px solid var(--line);
+  color: var(--text-mute); font-family: var(--f-mono); font-size: 0.7rem; padding: 5px 12px; border-radius: 14px;
+  transition: border-color 0.25s, color 0.25s;
+}
+.copy-btn:hover, .copy-btn.copied { border-color: var(--accent); color: var(--accent); }
+.contact-cta { text-align: center; }
+
+/* ===================== FOOTER ===================== */
+.footer { padding: 30px 0; border-top: 1px solid var(--line); background: var(--bg); }
+.footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 0.82rem; color: var(--text-mute); }
+.footer-tag { font-family: var(--f-mono); color: var(--ok); font-size: 0.74rem; }
+
+/* ===================== BACK TO TOP ===================== */
+.back-to-top {
+  position: fixed; bottom: 26px; right: 26px; z-index: 400;
+  width: 46px; height: 46px; border-radius: 50%; background: var(--accent); color: #04181d;
+  border: none; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  opacity: 0; visibility: hidden; transform: translateY(10px);
+  transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+}
+.back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+.back-to-top svg { stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+/* ===================================================================
+   RESPONSIVE
+   =================================================================== */
+@media (max-width: 980px) {
+  .hero-inner { grid-template-columns: 1fr; padding-top: 10px; }
+  .hero-photo-wrap { order: -1; margin-bottom: 10px; }
+  .photo-frame { width: 220px; }
+  .about-grid, .training-layout, .skills-grid { grid-template-columns: 1fr; gap: 36px; }
+  .expertise-grid { grid-template-columns: repeat(2, 1fr); }
+  .analyzer-grid { grid-template-columns: repeat(2, 1fr); }
+  .project-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: repeat(2, 1fr); }
+  .course-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 760px) {
+  .nav { flex-wrap: wrap; }
+  .nav-links {
+    position: fixed !important; top: 64px; left: 0; right: 0; bottom: 0;
+    height: calc(100vh - 64px);
+    background: var(--bg); flex-direction: column; padding: 30px 28px; gap: 22px;
+    transform: translateX(100%); transition: transform 0.35s;
+    overflow-y: auto; flex-basis: auto;
+  }
+  .nav-links.open { transform: translateX(0); }
+  .nav-links a { font-size: 1.05rem; }
+  .nav-toggle { display: flex; }
+  .nav-actions .btn-small { display: none; }
+  .nav-logo-text { display: none; }
+
+  .hero { padding-top: 80px; }
+  .hero-name { font-size: clamp(1.5rem, 7.2vw, 2.1rem); white-space: normal; }
+  .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; }
+  .stat-num { font-size: 1.5rem; }
+  .stat-suffix { font-size: 1.1rem; }
+  .stat-label { font-size: 0.66rem; max-width: 100%; }
+  .tag-chip { display: none; }
+
+  .expertise-grid { grid-template-columns: 1fr 1fr; }
+  .analyzer-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .section { padding: 56px 0; }
+
+  /* ---- About: tighter lede, organized profile blocks, calmer fact cards ---- */
+  .about-copy .lede { font-size: 1.05rem; line-height: 1.55; }
+  .profile-blocks { gap: 10px; }
+  .profile-block { padding: 15px 16px; }
+  .profile-block p { font-size: 0.92rem; }
+  .about-facts { gap: 12px; }
+  .fact-card { padding: 16px 18px; }
+  .fact-card-wide .fact-pills { gap: 7px; }
+  .fact-pills span { font-size: 0.68rem; padding: 5px 10px; }
+
+  /* ---- Timeline: marker no longer overlaps the rail, smaller heading ---- */
+  .timeline { padding-left: 44px; margin-top: 36px; }
+  .timeline-rail { left: 14px; }
+  .timeline-marker {
+    left: -44px; width: 30px; height: 30px; font-size: 0.58rem;
+  }
+  .timeline-card { padding: 20px 18px; }
+  .timeline-card h3 { font-size: 1.05rem; line-height: 1.3; }
+  .timeline-card:hover { transform: none; }
+
+  /* ---- Training & Certifications: smaller heading, no orphaned wrap ---- */
+  .section-title { font-size: 1.65rem; line-height: 1.2; }
+  .training-layout { gap: 30px; }
+  .training-heading { margin-top: 28px; }
+  .training-col + .training-heading { margin-top: 28px; }
+
+  /* ---- Course grid: compact chips instead of tall uniform blocks ---- */
+  .course-grid { gap: 8px; }
+  .course-chip {
+    padding: 10px 14px; font-size: 0.82rem; line-height: 1.4;
+    border-radius: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .expertise-grid { grid-template-columns: 1fr; }
+  .hero-actions { flex-direction: column; align-items: flex-start; }
+  .hero-social { margin-left: 0; margin-top: 4px; }
+  .hero-stats { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .stat-num { font-size: 1.3rem; }
+  .stat-label { font-size: 0.62rem; }
+}
