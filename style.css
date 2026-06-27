@@ -56,6 +56,10 @@ html { scroll-behavior: smooth; }
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
 }
 
+p, .timeline-points li, .fact-pills span, .course-chip {
+  text-wrap: pretty;
+}
+
 body {
   margin: 0;
   background: var(--bg);
@@ -223,10 +227,10 @@ h1, h2, h3, h4 { font-family: var(--f-display); margin: 0; letter-spacing: -0.01
 
 .hero-name {
   font-size: clamp(2.6rem, 6.5vw, 4.6rem);
-  line-height: 1.02; font-weight: 700;
+  line-height: 1.05; font-weight: 700;
   margin: 0 0 18px;
+  white-space: nowrap;
 }
-.hero-name .line { display: block; }
 .hero-name .accent { color: var(--accent); }
 
 .hero-role {
@@ -311,8 +315,20 @@ h1, h2, h3, h4 { font-family: var(--f-display); margin: 0; letter-spacing: -0.01
 
 /* ===================== ABOUT ===================== */
 .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px; align-items: start; }
-.about-copy .lede { font-size: 1.18rem; color: var(--text); font-weight: 500; margin-bottom: 22px; }
-.about-copy p { color: var(--text-dim); margin-bottom: 18px; }
+.about-copy .lede { font-size: 1.18rem; color: var(--text); font-weight: 500; margin-bottom: 26px; }
+
+.profile-blocks { display: flex; flex-direction: column; gap: 12px; }
+.profile-block {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 18px 20px; border-left: 2px solid var(--accent-dim);
+  transition: border-color 0.25s;
+}
+.profile-block:hover { border-left-color: var(--accent); }
+.profile-block-label {
+  display: block; font-family: var(--f-mono); font-size: 0.7rem; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;
+}
+.profile-block p { color: var(--text-dim); margin: 0; font-size: 0.96rem; }
 
 .about-facts { display: flex; flex-direction: column; gap: 14px; }
 .fact-card {
@@ -526,7 +542,7 @@ h1, h2, h3, h4 { font-family: var(--f-display); margin: 0; letter-spacing: -0.01
   .nav-logo-text { display: none; }
 
   .hero { padding-top: 80px; }
-  .hero-name { font-size: clamp(2.2rem, 10vw, 3rem); }
+  .hero-name { font-size: clamp(1.5rem, 7.2vw, 2.1rem); white-space: normal; }
   .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; }
   .stat-num { font-size: 1.5rem; }
   .stat-suffix { font-size: 1.1rem; }
@@ -538,8 +554,11 @@ h1, h2, h3, h4 { font-family: var(--f-display); margin: 0; letter-spacing: -0.01
   .contact-grid { grid-template-columns: 1fr; }
   .section { padding: 56px 0; }
 
-  /* ---- About: tighter lede, calmer fact cards ---- */
+  /* ---- About: tighter lede, organized profile blocks, calmer fact cards ---- */
   .about-copy .lede { font-size: 1.05rem; line-height: 1.55; }
+  .profile-blocks { gap: 10px; }
+  .profile-block { padding: 15px 16px; }
+  .profile-block p { font-size: 0.92rem; }
   .about-facts { gap: 12px; }
   .fact-card { padding: 16px 18px; }
   .fact-card-wide .fact-pills { gap: 7px; }
